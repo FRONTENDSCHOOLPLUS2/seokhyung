@@ -31,7 +31,8 @@
       "@pages/*": ["pages/*"],
       "@hooks/*": ["hooks/*"],
       "#types/*": ["types/*"], // 공용 타입 정의 폴더
-      "@/zustand/store": ["zustand/store"]
+      "@/zustand/*": ["zustand/*"],
+      "@/hooks/*": ["hooks/*"]
     }
   },
   "include": ["src"]
