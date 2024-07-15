@@ -1,28 +1,28 @@
-import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import CommentList from './CommentList';
-import CommentNew from './CommentNew';
-import { detailFetch } from '@hooks/detailFetch';
-import { deleteBoardApi } from '../../api/board/deleteBoard';
-import useUserStore from '@/zustand/store.ts';
+import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import CommentList from './CommentList'
+import CommentNew from './CommentNew'
+import { detailFetch } from '@hooks/detailFetch'
+import { deleteBoardApi } from '../../api/board/deleteBoard'
+import useUserStore from '@/zustand/store'
 
 const Detail = () => {
-  const navigate = useNavigate();
-  const { detailData, onSetDetailData } = detailFetch();
-  console.log(detailData);
-  const { accessTokenGlobal } = useUserStore();
+  const navigate = useNavigate()
+  const { detailData, onSetDetailData } = detailFetch()
+  console.log(detailData)
+  const { accessTokenGlobal } = useUserStore()
   if (!detailData) {
-    return null;
+    return null
   }
-  const { _id } = useParams<string>();
+  const { _id } = useParams<string>()
 
   const handleDeleteBtn = async (id: string | undefined, token: string) => {
     if (id !== undefined) {
       await deleteBoardApi(id, token).then(() => {
-        navigate('/info');
-      });
+        navigate('/info')
+      })
     }
-  };
+  }
   return (
     <main className="container px-4 mx-auto mt-4">
       <section className="p-4 mb-8">
@@ -61,7 +61,11 @@ const Detail = () => {
           <button
             type="button"
             className="px-4 py-1 ml-2 text-base font-semibold text-white bg-red-500 rounded hover:bg-amber-400"
-            onClick={() => handleDeleteBtn(_id, accessTokenGlobal)}
+            onClick={() => {
+              if (accessTokenGlobal !== null) {
+                handleDeleteBtn(_id, accessTokenGlobal)
+              }
+            }}
           >
             삭제
           </button>
@@ -75,10 +79,13 @@ const Detail = () => {
         {detailData.replies ? <CommentList detailData={detailData} /> : ''}
 
         {/* 댓글 입력 */}
-        <CommentNew onSetDetailData={onSetDetailData} boardId={detailData._id} />
+        <CommentNew
+          onSetDetailData={onSetDetailData}
+          boardId={detailData._id}
+        />
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default Detail;
+export default Detail

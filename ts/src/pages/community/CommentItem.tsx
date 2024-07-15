@@ -1,10 +1,26 @@
-import useUserStore from '@/zustand/store';
-import React from 'react';
+import useUserStore from '@/zustand/store'
+import React from 'react'
 
-const CommentItem = ({ item }) => {
-  const apiURL = 'https://api.fesp.shop';
-  const { userIdGlobal } = useUserStore();
-  const eachBoardId = item.user._id;
+type CommentPropsForm = {
+  content: string
+  createdAt: string
+  updatedAt: string
+  user: {
+    name: string
+    profile: {
+      name: string
+      originalname: string
+      path: string
+    }
+    _id: number
+  }
+  _id: number
+}
+
+const CommentItem = ({ item }: CommentPropsForm) => {
+  const apiURL = 'https://api.fesp.shop'
+  const { userIdGlobal } = useUserStore()
+  const eachBoardId = item.user._id
   return (
     <div className="p-4 mb-4 rounded-lg shadow-md">
       <div className="flex items-center justify-between mb-2">
@@ -35,7 +51,7 @@ const CommentItem = ({ item }) => {
         ''
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CommentItem;
+export default CommentItem
